@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 // eslint-disable-next-line testing-library/no-dom-import
 import { logRoles } from "@testing-library/dom";
+import { replaceCamelCaseWithSpaces } from './App';
 
 test('button has correct initial color and updates when clicked', () => {
   const {container} = render(<App/>);
@@ -58,4 +59,18 @@ test("gray is the disabled button color", () => {
 
   fireEvent.click(checkbox)
   expect(button).toHaveStyle("background-color: blue")
+})
+
+
+describe("spaces before camel case capital letters", () => {
+  test("works for no inner capital letters", () => {
+    expect(replaceCamelCaseWithSpaces("Red")).toBe("Red")
+  })
+   test("works for one inner capital letters", () => {
+    expect(replaceCamelCaseWithSpaces("MidnightBlue")).toBe("Midnight Blue")
+    
+  })
+   test("works for multiple inner capital letters", () => {
+    expect(replaceCamelCaseWithSpaces("MediumVioletRed")).toBe("Medium Violet Red")
+  })
 })
